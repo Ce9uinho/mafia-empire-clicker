@@ -47,6 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Mafia-specific colors
+        "dirty-money": "hsl(var(--dirty-money))",
+        "clean-money": "hsl(var(--clean-money))",
+        heat: "hsl(var(--heat))",
+        danger: "hsl(var(--danger))",
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
