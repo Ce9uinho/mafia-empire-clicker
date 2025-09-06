@@ -78,16 +78,20 @@ export const MafiaGame = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="game-background">
       <div className="max-w-7xl mx-auto p-6 pb-32">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">
-            Império da Máfia —{' '}
-            <span className="text-accent">Elite</span>
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-black mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            Império da Máfia
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Construa seu império criminoso e domine as ruas
+          <div className="inline-block px-6 py-2 rounded-full bg-gradient-to-r from-accent/20 to-primary/20 border border-accent/30 backdrop-blur-sm">
+            <p className="text-accent font-bold text-lg">
+              Elite Edition
+            </p>
+          </div>
+          <p className="text-muted-foreground text-lg mt-4 max-w-2xl mx-auto">
+            Construa seu império criminoso e domine as ruas da cidade
           </p>
         </div>
 
@@ -95,20 +99,18 @@ export const MafiaGame = () => {
         <GameStats state={state} ceilFormat={ceilFormat} />
 
         {/* Controls */}
-        <div className="mt-6">
-          <GameControls
-            gameSpeed={gameSpeed}
-            setGameSpeed={setGameSpeed}
-            onlyPlayerLevel={onlyPlayerLevel}
-            setOnlyPlayerLevel={setOnlyPlayerLevel}
-            onSave={saveGame}
-            onLoad={loadGame}
-            onReset={resetGame}
-          />
-        </div>
+        <GameControls
+          gameSpeed={gameSpeed}
+          setGameSpeed={setGameSpeed}
+          onlyPlayerLevel={onlyPlayerLevel}
+          setOnlyPlayerLevel={setOnlyPlayerLevel}
+          onSave={saveGame}
+          onLoad={loadGame}
+          onReset={resetGame}
+        />
 
         {/* Active Panel Content */}
-        <div className="mt-6">
+        <div className="mb-24">
           {renderActivePanel()}
         </div>
       </div>

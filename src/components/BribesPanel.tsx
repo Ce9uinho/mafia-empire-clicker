@@ -1,5 +1,19 @@
 import { BRIBES } from '@/types/game';
 import { GameState } from '@/types/game';
+import { 
+  BadgeCheck, 
+  Scale, 
+  Key, 
+  DollarSign, 
+  TrendingDown,
+  Plus,
+  AlertCircle
+} from 'lucide-react';
+
+const bribeIcons = {
+  cop: BadgeCheck,
+  juiz: Scale,
+};
 
 interface BribesPanelProps {
   state: GameState;
@@ -17,43 +31,85 @@ export const BribesPanel = ({
   };
 
   return (
-    <div className="grid gap-4">
-      {BRIBES.map(bribe => {
+    <div className="grid gap-6">
+      {BRIBES.map((bribe, index) => {
         const count = getBribeCount(bribe.id);
         const canBuy = state.bribes.length < state.subMax;
+        const BribeIcon = bribeIcons[bribe.id as keyof typeof bribeIcons] || Key;
 
         return (
-          <div key={bribe.id} className="mafia-item">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-bold flex items-center gap-2">
-                🗝️ {bribe.name}
-                {count > 0 && (
-                  <span className="mafia-chip bg-success text-white">
-                    {count} ativo{count > 1 ? 's' : ''}
-                  </span>
-                )}
-              </h3>
+          <div 
+            key={bribe.id} 
+            className="bribe-item slide-up"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center gap-4">
+                <div className="icon-wrapper">
+                  <BribeIcon className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    {bribe.name}
+                  </h3>
+                  {count > 0 && (
+                    <div className="game-chip bg-black/30 text-white border-white/20">
+                      <Key className="w-3 h-3" />
+                      {count} ativo{count > 1 ? 's' : ''}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
 
-            <div className="mafia-label mb-4">
-              🧼 {ceilFormat(bribe.costPer)}/s • 
-              Reduz 🔥 {ceilFormat(bribe.reduce)}/s
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <DollarSign className="w-4 h-4 text-green-400" />
+                  <span className="text-sm font-medium text-white/80">Custo</span>
+                </div>
+                <p className="text-lg font-bold text-white">
+                  {ceilFormat(bribe.costPer)}/s
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <TrendingDown className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm font-medium text-white/80">Reduz Heat</span>
+                </div>
+                <p className="text-lg font-bold text-white">
+                  -{ceilFormat(bribe.reduce)}/s
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-2 flex-wrap">
+            <div className="bg-black/30 rounded-lg p-3 mb-4">
+              <p className="text-sm text-white/80">
+                Reduz permanentemente o acúmulo de heat através de corrupção
+              </p>
+            </div>
+
+            <div className="flex gap-3">
               <button
                 onClick={() => onBuy(bribe)}
                 disabled={!canBuy}
-                className="mafia-button mafia-button-success disabled:opacity-50 disabled:cursor-not-allowed"
+                className="game-button success flex-1"
               >
-                Comprar ({ceilFormat(bribe.costPer)} 🧼/s)
+                <Plus className="w-4 h-4 mr-2" />
+                Comprar ({ceilFormat(bribe.costPer)}/s)
               </button>
             </div>
 
             {!canBuy && (
-              <p className="text-warning text-sm mt-2">
-                Limite de subornos atingido ({state.subMax})
-              </p>
+              <div className="mt-3 p-3 rounded-lg bg-black/30 border border-red-500/30">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-400" />
+                  <p className="text-red-300 text-sm font-medium">
+                    Limite de subornos atingido ({state.subMax})
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         );

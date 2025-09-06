@@ -1,5 +1,25 @@
 import { CAPANGAS } from '@/types/game';
 import { GameState } from '@/types/game';
+import { 
+  UserCheck, 
+  Laptop, 
+  Crown, 
+  Shield, 
+  DollarSign, 
+  TrendingUp, 
+  TrendingDown,
+  UserPlus,
+  UserMinus,
+  AlertCircle,
+  Users
+} from 'lucide-react';
+
+const capangaIcons = {
+  thug: UserCheck,
+  sold: Shield,
+  capo: Crown,
+  hacker: Laptop,
+};
 
 interface CapangasPanelProps {
   state: GameState;
@@ -14,15 +34,27 @@ export const CapangasPanel = ({
   onHire, 
   onFire 
 }: CapangasPanelProps) => {
-  const getPerkText = (buffs: any) => {
+  const getPerkComponents = (buffs: any) => {
     const perks = [];
     if (buffs?.dirtyMul && buffs.dirtyMul !== 1) {
-      perks.push(`x${Math.round(buffs.dirtyMul * 100) / 100} 💉`);
+      const isPositive = buffs.dirtyMul > 1;
+      perks.push({
+        icon: isPositive ? TrendingUp : TrendingDown,
+        text: `${Math.round(buffs.dirtyMul * 100)}%`,
+        color: isPositive ? 'text-green-400' : 'text-red-400',
+        label: 'Renda'
+      });
     }
     if (buffs?.heatMul && buffs.heatMul !== 1) {
-      perks.push(`x${Math.round(buffs.heatMul * 100) / 100} 🔥`);
+      const isPositive = buffs.heatMul < 1; // Lower heat is better
+      perks.push({
+        icon: isPositive ? TrendingDown : TrendingUp,
+        text: `${Math.round(buffs.heatMul * 100)}%`,
+        color: isPositive ? 'text-green-400' : 'text-red-400',
+        label: 'Heat'
+      });
     }
-    return perks.length ? perks.join(' • ') : '—';
+    return perks;
   };
 
   const getCapangaCount = (capangaId: string) => {
@@ -30,59 +62,108 @@ export const CapangasPanel = ({
   };
 
   return (
-    <div className="grid gap-4">
-      {CAPANGAS.map(capanga => {
+    <div className="grid gap-6">
+      {CAPANGAS.map((capanga, index) => {
         const count = getCapangaCount(capanga.id);
         const canHire = state.dirty >= capanga.hire && state.capangas.length < state.capMax;
         const canFire = count > 0;
+        const perks = getPerkComponents(capanga.buffs);
+        const CapangaIcon = capangaIcons[capanga.id as keyof typeof capangaIcons] || UserCheck;
 
         return (
-          <div key={capanga.id} className="mafia-item">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-bold flex items-center gap-2">
-                🧑‍💼 {capanga.name}
-                {count > 0 && (
-                  <span className="mafia-chip bg-success text-white">
-                    {count} contratado{count > 1 ? 's' : ''}
-                  </span>
-                )}
-              </h3>
+          <div 
+            key={capanga.id} 
+            className="capanga-item slide-up"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center gap-4">
+                <div className="icon-wrapper">
+                  <CapangaIcon className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    {capanga.name}
+                  </h3>
+                  {count > 0 && (
+                    <div className="game-chip bg-black/30 text-white border-white/20">
+                      <Users className="w-3 h-3" />
+                      {count} contratado{count > 1 ? 's' : ''}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
 
-            <div className="mafia-label mb-4">
-              Perks: {getPerkText(capanga.buffs)} • 
-              💉 Custo: {ceilFormat(capanga.hire)} • 
-              💉 Salário: {ceilFormat(capanga.salary)}/s
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <DollarSign className="w-4 h-4 text-yellow-300" />
+                  <span className="text-sm font-medium text-white/80">Custo</span>
+                </div>
+                <p className="text-lg font-bold text-white">
+                  {ceilFormat(capanga.hire)}
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <DollarSign className="w-4 h-4 text-red-400" />
+                  <span className="text-sm font-medium text-white/80">Salário</span>
+                </div>
+                <p className="text-lg font-bold text-white">
+                  {ceilFormat(capanga.salary)}/s
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-2 flex-wrap">
+            {perks.length > 0 && (
+              <div className="bg-black/30 rounded-lg p-3 mb-4">
+                <h4 className="text-sm font-medium text-white/80 mb-2">Benefícios:</h4>
+                <div className="flex gap-3">
+                  {perks.map((perk, i) => (
+                    <div key={i} className="flex items-center gap-1">
+                      <perk.icon className={`w-4 h-4 ${perk.color}`} />
+                      <span className="text-sm font-medium text-white">
+                        {perk.text} {perk.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-3">
               <button
                 onClick={() => onHire(capanga)}
                 disabled={!canHire}
-                className="mafia-button mafia-button-success disabled:opacity-50 disabled:cursor-not-allowed"
+                className="game-button success flex-1"
               >
-                Contratar ({ceilFormat(capanga.hire)} 💉)
+                <UserPlus className="w-4 h-4 mr-2" />
+                Contratar ({ceilFormat(capanga.hire)})
               </button>
               
               <button
                 onClick={() => onFire(capanga)}
                 disabled={!canFire}
-                className="mafia-button mafia-button-danger disabled:opacity-50 disabled:cursor-not-allowed"
+                className="game-button danger"
               >
-                Dispensar
+                <UserMinus className="w-4 h-4" />
               </button>
             </div>
 
-            {!canHire && state.dirty < capanga.hire && (
-              <p className="text-warning text-sm mt-2">
-                Precisa de {ceilFormat(capanga.hire - state.dirty)} 💉 mais
-              </p>
-            )}
-            
-            {!canHire && state.capangas.length >= state.capMax && (
-              <p className="text-warning text-sm mt-2">
-                Limite de capangas atingido ({state.capMax})
-              </p>
+            {!canHire && (
+              <div className="mt-3 p-3 rounded-lg bg-black/30 border border-red-500/30">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-400" />
+                  <p className="text-red-300 text-sm font-medium">
+                    {state.dirty < capanga.hire 
+                      ? `Precisa de ${ceilFormat(capanga.hire - state.dirty)} mais` 
+                      : `Limite atingido (${state.capMax})`
+                    }
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         );

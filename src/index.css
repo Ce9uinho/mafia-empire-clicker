@@ -2,50 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mafia Empire Design System */
+/* Modern Idle Game Design System */
 
 @layer base {
   :root {
-    /* Dark mafia theme */
-    --background: 220 20% 8%;
+    /* Modern dark theme with rich colors */
+    --background: 225 25% 6%;
     --foreground: 210 40% 98%;
 
-    --card: 220 25% 12%;
+    --card: 225 20% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 220 25% 12%;
+    --popover: 225 20% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 220 20% 8%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 210 100% 65%;
+    --primary-foreground: 225 25% 6%;
 
-    --secondary: 220 15% 20%;
+    --secondary: 225 15% 18%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 15% 25%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 225 12% 22%;
+    --muted-foreground: 215 20% 70%;
 
-    --accent: 45 95% 55%;
-    --accent-foreground: 220 20% 8%;
+    --accent: 280 100% 70%;
+    --accent-foreground: 225 25% 6%;
 
-    /* Mafia-specific colors */
-    --dirty-money: 45 95% 55%;
-    --clean-money: 120 40% 60%;
-    --heat: 0 80% 65%;
-    --danger: 0 70% 50%;
-    --success: 120 50% 50%;
-    --warning: 35 90% 60%;
+    /* Game-specific colors */
+    --dirty-money: 45 100% 60%;
+    --clean-money: 150 80% 60%;
+    --heat: 10 100% 65%;
+    --danger: 0 85% 60%;
+    --success: 140 80% 55%;
+    --warning: 38 100% 65%;
+    --info: 210 100% 65%;
+    --crime: 0 100% 70%;
+    --capanga: 60 100% 65%;
+    --building: 200 100% 65%;
+    --bribe: 280 100% 65%;
     
-    /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(45 95% 55%), hsl(35 85% 45%));
-    --gradient-danger: linear-gradient(135deg, hsl(0 80% 65%), hsl(10 70% 45%));
-    --gradient-card: linear-gradient(145deg, hsl(220 25% 12%), hsl(220 20% 10%));
-    --gradient-success: linear-gradient(135deg, hsl(120 50% 50%), hsl(140 45% 40%));
+    /* Rich gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 65%), hsl(240 100% 70%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 60%), hsl(35 100% 50%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 85% 60%), hsl(15 85% 50%));
+    --gradient-success: linear-gradient(135deg, hsl(140 80% 55%), hsl(160 80% 45%));
+    --gradient-card: linear-gradient(145deg, hsl(225 20% 12%), hsl(225 25% 8%));
+    --gradient-card-hover: linear-gradient(145deg, hsl(225 20% 15%), hsl(225 25% 11%));
+    --gradient-crime: linear-gradient(135deg, hsl(0 100% 70%), hsl(15 100% 60%));
+    --gradient-capanga: linear-gradient(135deg, hsl(60 100% 65%), hsl(45 100% 55%));
+    --gradient-building: linear-gradient(135deg, hsl(200 100% 65%), hsl(220 100% 55%));
+    --gradient-bribe: linear-gradient(135deg, hsl(280 100% 65%), hsl(300 100% 55%));
+    --gradient-background: radial-gradient(ellipse at top, hsl(225 25% 8%), hsl(225 25% 6%));
 
-    /* Shadows */
-    --shadow-card: 0 8px 32px hsla(220 20% 5% / 0.4);
-    --shadow-button: 0 4px 16px hsla(220 20% 5% / 0.3);
-    --shadow-glow: 0 0 24px hsla(45 95% 55% / 0.2);
+    /* Enhanced shadows */
+    --shadow-card: 0 10px 40px hsla(225 25% 3% / 0.6);
+    --shadow-card-hover: 0 15px 50px hsla(225 25% 3% / 0.8);
+    --shadow-button: 0 6px 20px hsla(225 25% 3% / 0.4);
+    --shadow-button-hover: 0 8px 25px hsla(225 25% 3% / 0.6);
+    --shadow-glow-gold: 0 0 30px hsla(45 100% 60% / 0.3);
+    --shadow-glow-primary: 0 0 30px hsla(210 100% 65% / 0.3);
+    --shadow-glow-danger: 0 0 30px hsla(0 85% 60% / 0.3);
+    --shadow-inner: inset 0 2px 4px hsla(225 25% 3% / 0.3);
 
     --border: 220 30% 18%;
     --input: 220 30% 18%;
@@ -115,120 +132,221 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans antialiased;
+    background: var(--gradient-background);
   }
 }
 
 @layer components {
-  /* Mafia UI Components */
-  .mafia-card {
-    @apply bg-card border border-border rounded-xl p-6 shadow-lg;
+  /* Modern Idle Game UI Components */
+  .game-background {
+    background: var(--gradient-background);
+    min-height: 100vh;
+  }
+
+  .game-card {
+    @apply relative rounded-2xl p-6 transition-all duration-300;
     background: var(--gradient-card);
+    border: 1px solid hsl(225 20% 15%);
     box-shadow: var(--shadow-card);
+    backdrop-filter: blur(10px);
   }
 
-  .mafia-stat {
-    @apply text-3xl font-bold mb-2;
+  .game-card:hover {
+    background: var(--gradient-card-hover);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
   }
 
-  .mafia-label {
-    @apply text-sm text-muted-foreground flex items-center gap-2;
+  .stat-card {
+    @apply game-card text-center;
   }
 
-  .mafia-button {
-    @apply px-4 py-2 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring;
+  .stat-value {
+    @apply text-4xl font-black mb-2 bg-gradient-to-r bg-clip-text text-transparent;
+  }
+
+  .stat-value.dirty {
+    background-image: var(--gradient-gold);
+  }
+
+  .stat-value.clean {
+    background-image: var(--gradient-success);
+  }
+
+  .stat-value.heat {
+    background-image: var(--gradient-danger);
+  }
+
+  .stat-value.level {
+    background-image: var(--gradient-primary);
+  }
+
+  .stat-label {
+    @apply text-sm text-muted-foreground font-medium mb-3;
+  }
+
+  .game-button {
+    @apply relative px-6 py-3 rounded-xl font-bold text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden;
     box-shadow: var(--shadow-button);
   }
 
-  .mafia-button:active {
+  .game-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-button-hover);
+  }
+
+  .game-button:active:not(:disabled) {
     transform: translateY(1px);
-    filter: brightness(0.9);
+    box-shadow: var(--shadow-inner);
   }
 
-  .mafia-button-gold {
+  .game-button.primary {
+    background: var(--gradient-primary);
+    @apply text-primary-foreground focus:ring-primary;
+  }
+
+  .game-button.gold {
     background: var(--gradient-gold);
-    @apply text-accent-foreground hover:brightness-110;
+    @apply text-accent-foreground focus:ring-accent;
+    box-shadow: var(--shadow-button), var(--shadow-glow-gold);
   }
 
-  .mafia-button-success {
+  .game-button.success {
     background: var(--gradient-success);
-    @apply text-white hover:brightness-110;
+    @apply text-white focus:ring-success;
   }
 
-  .mafia-button-danger {
+  .game-button.danger {
     background: var(--gradient-danger);
-    @apply text-white hover:brightness-110;
+    @apply text-white focus:ring-danger;
+    box-shadow: var(--shadow-button), var(--shadow-glow-danger);
   }
 
-  .mafia-button-ghost {
-    @apply bg-muted text-muted-foreground hover:bg-secondary hover:text-secondary-foreground;
+  .game-button.ghost {
+    @apply bg-secondary/50 text-secondary-foreground border border-border focus:ring-secondary;
+    backdrop-filter: blur(5px);
   }
 
-  .mafia-chip {
-    @apply px-3 py-1 rounded-full bg-muted text-muted-foreground text-sm font-medium border border-border;
+  .game-chip {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-secondary/50 text-secondary-foreground border border-border;
+    backdrop-filter: blur(5px);
   }
 
-  .mafia-progress-bar {
-    @apply h-3 bg-muted rounded-full overflow-hidden relative;
+  .progress-bar {
+    @apply h-4 bg-secondary/30 rounded-full overflow-hidden relative border border-border;
+    backdrop-filter: blur(5px);
   }
 
-  .mafia-progress-fill {
-    @apply h-full transition-all duration-300 ease-out;
+  .progress-fill {
+    @apply h-full transition-all duration-700 ease-out relative overflow-hidden;
   }
 
-  .mafia-progress-xp {
-    background: var(--gradient-gold);
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 2s infinite;
   }
 
-  .mafia-progress-heat {
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  .progress-xp {
+    background: var(--gradient-primary);
+  }
+
+  .progress-heat {
     background: var(--gradient-danger);
   }
 
-  .mafia-tab {
-    @apply flex-1 py-3 px-4 text-center font-semibold rounded-lg bg-muted text-muted-foreground transition-all;
+  .game-tab {
+    @apply relative flex-1 py-4 px-6 text-center font-bold rounded-2xl transition-all duration-300 border border-border;
+    background: hsl(225 15% 15%);
+    color: hsl(215 20% 70%);
     box-shadow: var(--shadow-button);
   }
 
-  .mafia-tab.active {
-    background: var(--gradient-gold);
-    @apply text-accent-foreground ring-2 ring-ring;
-    box-shadow: var(--shadow-glow);
+  .game-tab:hover {
+    background: hsl(225 15% 18%);
+    transform: translateY(-1px);
   }
 
-  .mafia-item {
-    @apply mafia-card p-4;
+  .game-tab.active {
+    background: var(--gradient-primary);
+    color: hsl(225 25% 6%);
+    box-shadow: var(--shadow-glow-primary), var(--shadow-button);
+    border-color: hsl(210 100% 65%);
   }
 
-  .mafia-item.player-active {
-    @apply ring-2 ring-accent;
-    box-shadow: var(--shadow-glow), var(--shadow-card);
+  .crime-item {
+    @apply game-card;
+    background: var(--gradient-crime);
   }
 
-  .pulse-glow {
+  .capanga-item {
+    @apply game-card;
+    background: var(--gradient-capanga);
+  }
+
+  .building-item {
+    @apply game-card;
+    background: var(--gradient-building);
+  }
+
+  .bribe-item {
+    @apply game-card;
+    background: var(--gradient-bribe);
+  }
+
+  .item-active {
+    @apply ring-2 ring-primary;
+    box-shadow: var(--shadow-glow-primary), var(--shadow-card);
     animation: pulse-glow 2s ease-in-out infinite alternate;
   }
 
   @keyframes pulse-glow {
     from {
-      box-shadow: var(--shadow-card);
+      box-shadow: var(--shadow-glow-primary), var(--shadow-card);
     }
     to {
-      box-shadow: var(--shadow-glow), var(--shadow-card);
+      box-shadow: var(--shadow-glow-primary), var(--shadow-card), 0 0 50px hsla(210 100% 65% / 0.4);
     }
   }
 
-  .money-animation {
-    animation: money-float 0.5s ease-out;
+  .icon-wrapper {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-full;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
   }
 
-  @keyframes money-float {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-20px);
+  .floating-animation {
+    animation: floating 3s ease-in-out infinite;
+  }
+
+  @keyframes floating {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
       opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
