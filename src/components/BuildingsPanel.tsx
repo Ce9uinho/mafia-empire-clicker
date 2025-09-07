@@ -111,7 +111,7 @@ export const BuildingsPanel = ({
               <button
                 onClick={() => onBuy(building)}
                 disabled={!canBuy}
-                className="game-button success flex-1"
+                className="game-button primary flex-1"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Construir ({ceilFormat(building.cost)})
@@ -120,7 +120,7 @@ export const BuildingsPanel = ({
               <button
                 onClick={() => onSell(building)}
                 disabled={!canSell}
-                className="game-button danger"
+                className="game-button primary"
               >
                 <Trash2 className="w-4 h-4" />
               </button>

@@ -144,8 +144,8 @@ export const CrimesPanel = ({
                 disabled={!canAssign}
                 className={`game-button ${
                   isPlayerActive 
-                    ? 'danger' 
-                    : 'gold'
+                    ? 'primary active' 
+                    : 'primary'
                 } flex-1 min-w-0`}
               >
                 <User className="w-4 h-4 mr-2" />
@@ -155,7 +155,7 @@ export const CrimesPanel = ({
               <button
                 onClick={() => onAddCapanga(crime.id, 1)}
                 disabled={!canAssign || !hasAvailableCapangas}
-                className="game-button success"
+                className="game-button primary"
               >
                 <UserPlus className="w-4 h-4" />
               </button>
@@ -163,7 +163,7 @@ export const CrimesPanel = ({
               <button
                 onClick={() => onAddCapanga(crime.id, -1)}
                 disabled={!canAssign || workers === 0}
-                className="game-button danger"
+                className="game-button primary"
               >
                 <UserMinus className="w-4 h-4" />
               </button>

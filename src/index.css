@@ -352,22 +352,18 @@
 
   .crime-item {
     @apply game-card;
-    background: var(--gradient-crime);
   }
 
   .capanga-item {
     @apply game-card;
-    background: var(--gradient-capanga);
   }
 
   .building-item {
     @apply game-card;
-    background: var(--gradient-building);
   }
 
   .bribe-item {
     @apply game-card;
-    background: var(--gradient-bribe);
   }
 
   .item-active {

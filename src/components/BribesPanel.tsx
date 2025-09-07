@@ -94,7 +94,7 @@ export const BribesPanel = ({
               <button
                 onClick={() => onBuy(bribe)}
                 disabled={!canBuy}
-                className="game-button success flex-1"
+                className="game-button primary flex-1"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Comprar ({ceilFormat(bribe.costPer)}/s)

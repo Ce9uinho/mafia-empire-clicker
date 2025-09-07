@@ -51,15 +51,15 @@ export const GameControls = ({
         </label>
 
         <div className="flex gap-3 ml-auto">
-          <button onClick={onSave} className="game-button gold">
+          <button onClick={onSave} className="game-button primary active">
             <Save className="w-4 h-4 mr-2" />
             Guardar
           </button>
-          <button onClick={onLoad} className="game-button ghost">
+          <button onClick={onLoad} className="game-button primary">
             <Upload className="w-4 h-4 mr-2" />
             Carregar
           </button>
-          <button onClick={onReset} className="game-button danger">
+          <button onClick={onReset} className="game-button primary">
             <RotateCcw className="w-4 h-4 mr-2" />
             Reset
           </button>

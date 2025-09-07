@@ -137,7 +137,7 @@ export const CapangasPanel = ({
               <button
                 onClick={() => onHire(capanga)}
                 disabled={!canHire}
-                className="game-button success flex-1"
+                className="game-button primary flex-1"
               >
                 <UserPlus className="w-4 h-4 mr-2" />
                 Contratar ({ceilFormat(capanga.hire)})
@@ -146,7 +146,7 @@ export const CapangasPanel = ({
               <button
                 onClick={() => onFire(capanga)}
                 disabled={!canFire}
-                className="game-button danger"
+                className="game-button primary"
               >
                 <UserMinus className="w-4 h-4" />
               </button>
